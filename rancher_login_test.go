@@ -29,15 +29,15 @@ func TestRancherLogin(t *testing.T) {
 	}
 	jsonData, _ := json.Marshal(payload)
 
-	// ✅ Create a custom HTTP client that ignores SSL errors
+	// Create a custom HTTP client that ignores SSL errors
 	client := &http.Client{
 		Timeout: 10 * time.Second, // Set a timeout
 		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, // 🔥 Disable SSL verification
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		},
 	}
 
-	// ✅ Send request with custom client
+	// Send request with custom client
 	resp, err := client.Post(rancherURL, "application/json", bytes.NewBuffer(jsonData))
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode, "Login should return 200 OK")
